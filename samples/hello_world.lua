@@ -1,4 +1,4 @@
 function hello_world()
-	chainhelper:log('hello world')
-	chainhelper:log(date('%Y-%m-%dT%H:%M:%S', chainhelper:time()))
+	contract_helper:log('hello world')
+	contract_helper:log(date('%Y-%m-%dT%H:%M:%S', contract_helper:time()))
 end
