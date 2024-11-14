@@ -9,10 +9,7 @@ function init_data()
     }
 end
 
-function do_set_page(me, params)
-    assert(#params == 2, '参数数目不匹配')
-    local page_id = params[1]
-    local page_nfa_id = params[2]
+function do_set_page(page_id, page_nfa_id)
     local check_page = contract_helper:get_nfa_info(page_nfa_id)
     assert(check_page.symbol == 'nfa.jingshu.page', '加入的对象不是书页')
 
@@ -28,9 +25,7 @@ function do_set_page(me, params)
 	contract_helper:log(string.format('设置书页（%d）为本书第%d页', page_nfa_id, page_id))
 end
 
-function do_read(me, params)
-    assert(#params == 1, '参数数目不匹配')
-    local page_id = params[1]
+function do_read(page_id)
     local nfa = nfa_helper:get_info()
     local pages = nfa.data.pages or {}
     local page_nfa_id = pages[page_id]

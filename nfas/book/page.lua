@@ -9,10 +9,7 @@ function init_data()
     }
 end
 
-function do_write(me, params)
-    assert(#params == 1, '参数数目不匹配')
-    local content = params[1]
-
+function do_write(content)
     local nfa = nfa_helper:get_info()
     local data = nfa.data
     data.content = content
@@ -22,6 +19,6 @@ function do_write(me, params)
 
 end
 
-function do_read(me, params)
+function do_read()
 	contract_helper:log(nfa_helper:get_info().data.content)
 end
