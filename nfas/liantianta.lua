@@ -14,7 +14,7 @@ function do_active(me, params)
 end
 
 function do_heart_beat(me, params)
-    -- 转化自身的真气到金石    
+    -- 转化自身的元气到金石    
     local nfa = nfa_helper:get_info()
 	-- contract_helper:log(string.format('nfa qi=%d', nfa.qi))
     if nfa.qi > 1000 then
