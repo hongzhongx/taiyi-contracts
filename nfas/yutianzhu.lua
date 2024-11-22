@@ -1,3 +1,5 @@
+deposit_qi = { consequence = true }
+withdraw_qi = { consequence = true }
 heart_beat = { consequence = true }
 active = { consequence = true }
 place_in = { consequence = true }
@@ -14,6 +16,20 @@ function init_data()
         total_qi_conversion = 0,
         conversion_threshold = 10000 --转化的总气量超过这个阈值，则转化目标区域类型为田地
     }
+end
+
+function do_deposit_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+    nfa_helper:deposit_from(contract_base_info.caller, amount, "QI", true)
+end
+
+function do_withdraw_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+
+    local nfa = nfa_helper:get_info()
+    assert(nfa.qi < amount, "法宝内真气不足")
+
+    nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
 end
 
 function do_active()

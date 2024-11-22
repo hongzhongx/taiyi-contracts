@@ -3,6 +3,8 @@ active = { consequence = true }
 place_in = { consequence = true }
 take_out = { consequence = true }
 setup = { consequence = true }
+deposit_qi = { consequence = true }
+withdraw_qi = { consequence = true }
 
 -- 接界符，一次性法宝，单向连接区域A到区域B
 -- 返回一个table
@@ -14,6 +16,20 @@ function init_data()
         to_zone = -1, --目标区域B的NFA ID
         action_qi_threshold = 1000000 --内含真气超过这个阈值才能行使功能
     }
+end
+
+function do_deposit_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+    nfa_helper:deposit_from(contract_base_info.caller, amount, "QI", true)
+end
+
+function do_withdraw_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+
+    local nfa = nfa_helper:get_info()
+    assert(nfa.qi < amount, "法宝内真气不足")
+
+    nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
 end
 
 function do_active()
