@@ -11,13 +11,13 @@ function init_data()
     }
 end
 
-function do_welcome()
+function eval_welcome()
     import_contract('contract.welcome').welcome();
 end
 
-function do_look()
-    local nfa = nfa_helper:get_info()
-    contract_helper:log(string.format('&YEL&%s&NOR&看了看四周。', contract_helper:get_actor_info(nfa.id).name))
+function eval_look(params)
+    local look = import_contract("contract.cmds.std.look").look
+    look(#params == 0 and "" or params[1])
 end
 
 function do_go()

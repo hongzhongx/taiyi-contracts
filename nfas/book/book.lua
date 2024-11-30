@@ -33,7 +33,7 @@ function do_set_page(page_id, page_nfa_id)
 end
 
 -- page_id=0 表示获取书名，page_id > 0表示从第一页开始读第几页
-function do_read(page_id)
+function eval_read(page_id)
     if page_id == 0 then
         nfa_helper:read_chain({ name=true })
         contract_helper:log(nfa_data.name)

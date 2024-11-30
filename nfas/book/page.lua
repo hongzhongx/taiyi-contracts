@@ -20,7 +20,7 @@ function do_write(content)
 
 end
 
-function do_read()
+function eval_read()
     nfa_helper:read_chain({ content=true })
 	contract_helper:log(nfa_data.content)
 end
