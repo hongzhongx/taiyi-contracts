@@ -6,60 +6,73 @@
 --  所以推荐如下写法：
 Item = import_contract('contract.inherit.object').Object:new()
 
+-- 重载new，识别nfa
+function Item:new (o)
+    o = {me = o or {}}
+    o.nfa_info = {}
+    if o.me.id ~= nil then
+        if contract_helper:is_nfa_valid(o.me.id) then
+            o.nfa_info = contract_helper:get_nfa_info(o.me.id)
+        end
+    elseif o.me.nfa_id ~= nil then
+        if contract_helper:is_nfa_valid(o.me.nfa_id) then
+            o.nfa_info = contract_helper:get_nfa_info(o.me.nfa_id)
+        end
+    end
+    o.__super = self
+    self.__index = self
+    setmetatable(o, self)
+    return o
+end
+
 function Item:short()
-    local me = self.me
-    if me.nfa_id == nil then
+    if self.nfa_info.id == nil then
         return "未知事物"
     end
 
-    local result = contract_helper:eval_nfa_action(me.nfa_id, "short", {})
+    local result = contract_helper:eval_nfa_action(self.nfa_info.id, "short", {})
     if #result == 1 then
         return result[1]
     end
 
-    if me.name ~= nil then
-        return me.name
+    if self.me.name ~= nil then
+        return self.me.name
     end
 
-    local nfa = contract_helper:get_nfa_info(me.nfa_id)
-    if nfa.data.name ~= nil then
-        return nfa.data.name
+    if self.nfa_info.data.name ~= nil then
+        return self.nfa_info.data.name
     end
 
     return "未知事物"
 end
 
 function Item:long()
-    local me = self.me
-    if me.nfa_id == nil then
+    if self.nfa_info.id == nil then
         return "未知事物"
     end
 
-    local result = contract_helper:eval_nfa_action(me.nfa_id, "long", {})
+    local result = contract_helper:eval_nfa_action(self.nfa_info.id, "long", {})
     if #result == 1 then
         return result[1]
     end
 
-    if me.description ~= nil then
-        return me.description
+    if self.me.description ~= nil then
+        return self.me.description
     end
 
-    local nfa = contract_helper:get_nfa_info(me.nfa_id)
-    if nfa.data.description ~= nil then
-        return nfa.data.description
+    if self.nfa_info.data.description ~= nil then
+        return self.nfa_info.data.description
     end
 
     return self:short()
 end
 
 function Item:data()
-    local me = self.me
-    if me.nfa_id == nil then
+    if self.nfa_info.data == nil then
         return {}
+    else
+        return self.nfa_info.data
     end
-
-    local nfa = contract_helper:get_nfa_info(me.nfa_id)
-    return nfa.data
 end
 
 function Item:unit()

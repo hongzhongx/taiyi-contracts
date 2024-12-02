@@ -1,9 +1,9 @@
 -- 从nfa的角度看进来
 function look(target_name)
-    local nfa = nfa_helper:get_info()
+    local nfa_me = nfa_helper:get_info()
     if target_name == "" then
-        if nfa.data.is_actor then
-            local actor_me = contract_helper:get_actor_info(nfa.id)
+        if nfa_me.data.is_actor then
+            local actor_me = contract_helper:get_actor_info(nfa_me.id)
             local zone_info = contract_helper:get_zone_info_by_name(actor_me.location)
             Zone = import_contract("contract.inherit.zone").Zone
             local zone = Zone:new(zone_info)
@@ -24,8 +24,8 @@ function look(target_name)
             contract_helper:log('什么都看不了')
         end
     else
-        if nfa.data.is_actor then
-            local actor = contract_helper:get_actor_info(nfa.id)
+        if nfa_me.data.is_actor then
+            local actor = contract_helper:get_actor_info(nfa_me.id)
             contract_helper:log(string.format('&YEL&%s&NOR&看了一眼&YEL&%s&NOR&', actor.name, target_name))
         else
             contract_helper:log('什么都看不了')

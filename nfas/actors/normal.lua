@@ -1,5 +1,9 @@
 welcome = { consequence = false }
 look = { consequence = false }
+inventory = { consequence = false }
+hp = { consequence = false }
+resource = { consequence = false }
+map = { consequence = false }
 
 go = { consequence = true }
 heart_beat = { consequence = true }
@@ -15,14 +19,34 @@ function eval_welcome()
     import_contract('contract.welcome').welcome();
 end
 
-function eval_look(params)
+function eval_look(target)
     local look = import_contract("contract.cmds.std.look").look
-    look(#params == 0 and "" or params[1])
+    look(target)
 end
 
-function do_go()
-    local nfa = nfa_helper:get_info()
-    contract_helper:log(string.format('&YEL&%s&NOR&不会走路。', contract_helper:get_actor_info(nfa.id).name))
+function eval_inventory(target)
+    local inventory = import_contract("contract.cmds.actor.inventory").inventory
+    inventory(target)
+end
+
+function eval_hp(target, option)
+    local hp = import_contract("contract.cmds.actor.hpcmd").hp
+    hp(target, option)
+end
+
+function eval_resource(target)
+    local resource = import_contract("contract.cmds.actor.resource").resource
+    resource(target)
+end
+
+function eval_map(target)
+    local map = import_contract("contract.cmds.std.map").map
+    map(target)
+end
+
+function do_go(dir)
+    local go = import_contract("contract.cmds.std.gocmd").go
+    go(dir)
 end
 
 function do_heart_beat()

@@ -22,7 +22,7 @@ function do_born_actor(actor_name, gender, sexuality, init_attrs)
     assert(parent_nfa.data.is_zone, "法宝未安置在区域上")
     local zone = contract_helper:get_zone_info(nfa.parent)
 
-    assert(contract_helper:is_actor_valid(actor_name), string.format('未找到名为"%s"的角色', actor_name))
+    assert(contract_helper:is_actor_valid_by_name(actor_name), string.format('未找到名为"%s"的角色', actor_name))
     local actor = contract_helper:get_actor_info_by_name(actor_name)
     assert(actor.born == false, string.format('"%s"已经在世了', actor_name))
 
@@ -48,7 +48,7 @@ function do_upgrade_actor(actor_name)
     assert(parent_nfa.data.is_zone, "法宝未安置在区域上")
     local zone = contract_helper:get_zone_info(nfa.parent)
 
-    assert(contract_helper:is_actor_valid(actor_name), string.format('未找到名为"%s"的角色', actor_name))
+    assert(contract_helper:is_actor_valid_by_name(actor_name), string.format('未找到名为"%s"的角色', actor_name))
     local actor = contract_helper:get_actor_info_by_name(actor_name)
     assert(actor.location == zone.name, string.format('角色"%s"需要位于法宝所在地"%s"', actor_name, zone.name))
 
