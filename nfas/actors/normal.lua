@@ -7,6 +7,8 @@ map = { consequence = false }
 
 go = { consequence = true }
 heart_beat = { consequence = true }
+deposit_qi = { consequence = true }
+withdraw_qi = { consequence = true }
 
 function init_data()
     return {
@@ -51,4 +53,19 @@ end
 
 function do_heart_beat()
     chainhelper:log(string.format("这里是&YEL&%s&NOR&的心跳。", actor_helper:get_info().name))
+end
+
+function do_deposit_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+    nfa_helper:deposit_from(contract_base_info.caller, amount, "QI", true)
+end
+
+function do_withdraw_qi(amount)
+    assert(amount > 0, "设置的真气无效")
+
+    local nfa = nfa_helper:get_info()
+    assert(nfa.qi < amount, "角色体内真气不足")
+
+    assert(contract_base_info.caller == nfa.owner_account, "无权从角色体内提取真气")
+    nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
 end
