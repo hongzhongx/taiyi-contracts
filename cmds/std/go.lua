@@ -18,7 +18,4 @@ function go(dir)
     -- chainhelper:log(string.format('&YEL&%s&NOR&来到了&HIC&%s&NOR&。', me.name, target_zone))
     local look = import_contract("contract.cmds.std.look").look
     look("")
-
-    local target_zone_info = contract_helper:get_zone_info_by_name(target_zone_name)
-    contract_helper:do_nfa_action(target_zone_info.nfa_id, "on_actor_enter", {nfa_me.id})
 end

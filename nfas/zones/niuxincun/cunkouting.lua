@@ -3,8 +3,6 @@ long = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
 
-on_actor_enter = { consequence = true }
-
 function init_data()
     return {
         is_zone = true,
@@ -34,5 +32,7 @@ function eval_map()
     return { map.map_data() }
 end
 
-function do_on_actor_enter(actor_nfa_id)
+function on_actor_enter(actor_nfa_id)
+    local actor = contract_helper:get_actor_info(actor_nfa_id)
+    contract_helper:log(string.format('%s来到了村口亭', actor.name))
 end

@@ -3,7 +3,6 @@ long = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
 
-on_actor_enter = { consequence = true }
 heart_beat = { consequence = true }
 
 function init_data()
@@ -37,7 +36,7 @@ function do_heart_beat()
     contract_helper:log("这里是&HIC&牛心村&NOR&的心跳。")
 end
 
-function do_on_actor_enter(actor_nfa_id)
+function on_actor_enter(actor_nfa_id)
     -- 如果按后面代码直接再移动到村口亭，那么角色永远无法停留在这里，会自动陷入村口亭
     -- local target_zone = "牛心村.村口亭"
     -- local err = contract_helper:move_actor(actor_data.name, target_zone)
