@@ -1,5 +1,8 @@
-# taiyi-contracts
-天道实践，智能游戏脚本的一些样例和实践
+<h1 align='center'>太乙天道实践</h1>
+
+这是[太乙网络](https://github.com/hongzhongx/taiyi)的天道实践项目，这里有能在大傩世界运行的各种智能游戏脚本（SGS）样例和实践。
+
+太乙网络中的大傩世界，本身是一套规则的集合体，这些规则（即天道）在大傩世界的建设中不断形成和演化，他们本身是由智能游戏脚本来实现的。这些智能游戏脚本类似于区块链上的智能合约，运行他们的虚拟机的信息详见[太乙网络虚拟机](https://github.com/hongzhongx/taiyi?tab=readme-ov-file#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8lua%E4%BD%9C%E4%B8%BA%E6%99%BA%E8%83%BD%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%80%8C%E4%B8%8D%E6%98%AFevmwasmv8%E6%88%96%E8%80%85docker%E7%AD%89%E7%AD%89)。
 
 # 简单天道合约实验
 
