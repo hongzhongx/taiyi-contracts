@@ -1,4 +1,7 @@
+place_in = { consequence = true }
+take_out = { consequence = true }
 write = { consequence = true }
+
 read = { consequence = false }
 
 -- 返回一个table
@@ -18,6 +21,17 @@ function do_write(content)
     local nfa = nfa_helper:get_info()
 	contract_helper:log(string.format('页面（%d）写入文字：%s', nfa.id, content))
 
+end
+
+function do_place_in(parent)
+    -- check parent valid by get_nfa_info
+    local parent_nfa = contract_helper:get_nfa_info(parent)
+    -- parent_nfa must have same owner as caller account
+    nfa_helper:add_to_parent(parent_nfa.id)
+end
+
+function do_take_out()
+    nfa_helper:remove_from_parent()
 end
 
 function eval_read()
