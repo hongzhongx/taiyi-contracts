@@ -7,7 +7,6 @@ function talent_data()
     }
 end
 
--- actor_helper is valid
-function trigger()
-    -- no effect
-end
+-- nfa_helper is valid
+-- 不需要触发的天赋，就不要定义trigger函数
+--function trigger() end
