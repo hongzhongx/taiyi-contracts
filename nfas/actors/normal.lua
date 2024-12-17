@@ -9,6 +9,7 @@ go = { consequence = true }
 heart_beat = { consequence = true }
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
+exploit = { consequence = true }
 
 function init_data()
     return {
@@ -49,6 +50,11 @@ end
 function do_go(dir)
     local go = import_contract("contract.cmds.std.gocmd").go
     go(dir)
+end
+
+function do_exploit()
+    local exploit = import_contract("contract.cmds.std.exploit").exploit
+    exploit()
 end
 
 function do_heart_beat()

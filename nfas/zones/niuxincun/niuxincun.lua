@@ -42,3 +42,59 @@ function on_actor_enter(actor_nfa_id)
     -- local err = contract_helper:move_actor(actor_data.name, target_zone)
     -- ....
 end
+
+function max(a, b)
+    return a > b and a or b
+end
+
+function on_actor_exploit(actor_nfa_id)
+    local nfa_me = nfa_helper:get_info()
+    assert(nfa_me.data.is_zone == true, "只有区域才能调用这个入口")
+
+    local resources = contract_helper:get_nfa_resources(nfa_me.id)
+    local reward_gold = 0
+    local reward_food = 0
+    local reward_wood = 0
+    local reward_fabric = 0
+    local reward_herb = 0
+    if resources.gold > 0 then
+        reward_gold = max((contract_helper:generate_hash( actor_nfa_id + 7789 )) % resources.gold, resources.gold / 2)
+    end
+    if resources.food > 0 then
+        reward_food = max((contract_helper:generate_hash( actor_nfa_id + 8117 )) % resources.food, resources.food / 2)
+    end
+    if resources.wood > 0 then
+        reward_wood = max((contract_helper:generate_hash( actor_nfa_id + 8681 )) % resources.wood, resources.wood / 2)
+    end
+    if resources.fabric > 0 then
+        reward_fabric = max((contract_helper:generate_hash( actor_nfa_id + 9679 )) % resources.fabric, resources.fabric / 2)
+    end
+    if resources.herb > 0 then
+        reward_herb = max((contract_helper:generate_hash( actor_nfa_id + 10711 )) % resources.herb, resources.herb / 2)
+    end
+
+    local tiandao = contract_helper:get_tiandao_property()
+    local actor = contract_helper:get_actor_info(actor_nfa_id)
+
+    if reward_gold > 0 then
+        nfa_helper:transfer_to(actor_nfa_id, reward_gold, "GOLD", false)
+        contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&金石。', tiandao.v_years, tiandao.v_months, actor.name, reward_gold/1000000.0))
+    end
+    if reward_food > 0 then
+        nfa_helper:transfer_to(actor_nfa_id, reward_food, "FOOD", false)
+        contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&食物。', tiandao.v_years, tiandao.v_months, actor.name, reward_food/1000000.0))
+    end
+    if reward_wood > 0 then
+        nfa_helper:transfer_to(actor_nfa_id, reward_wood, "WOOD", false)
+        contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&木材。', tiandao.v_years, tiandao.v_months, actor.name, reward_wood/1000000.0))
+    end
+    if reward_fabric > 0 then
+        nfa_helper:transfer_to(actor_nfa_id, reward_fabric, "FABR", false)
+        contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&织物。', tiandao.v_years, tiandao.v_months, actor.name, reward_fabric/1000000.0))
+    end
+    if reward_herb > 0 then
+        nfa_helper:transfer_to(actor_nfa_id, reward_herb, "HERB", false)
+        contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&药材。', tiandao.v_years, tiandao.v_months, actor.name, reward_herb/1000000.0))
+    end
+
+end
