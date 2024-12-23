@@ -1,6 +1,5 @@
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
-heart_beat = { consequence = true }
 active = { consequence = true }
 place_in = { consequence = true }
 take_out = { consequence = true }
@@ -37,7 +36,7 @@ function do_active()
     nfa_helper:enable_tick()
 end
 
-function do_heart_beat()
+function on_heart_beat()
     nfa_helper:read_chain({ total_qi_conversion=true, target=true })
 
     -- 转化自身的元气到食物

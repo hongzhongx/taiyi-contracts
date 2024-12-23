@@ -3,8 +3,6 @@ long = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
 
-heart_beat = { consequence = true }
-
 function init_data()
     return {
         is_zone = true,
@@ -32,7 +30,7 @@ function eval_map()
     return { map.map_data() }
 end
 
-function do_heart_beat()
+function on_heart_beat()
     contract_helper:log("这里是&HIC&牛心村&NOR&的心跳。")
 end
 
@@ -47,6 +45,7 @@ function max(a, b)
     return a > b and a or b
 end
 
+-- 角色探索回调函数
 function on_actor_exploit(actor_nfa_id)
     local nfa_me = nfa_helper:get_info()
     assert(nfa_me.data.is_zone == true, "只有区域才能调用这个入口")

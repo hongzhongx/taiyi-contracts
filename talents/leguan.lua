@@ -6,7 +6,7 @@ function talent_data()
     }
 end
 
--- actor_helper is valid
+-- nfa_helper is valid
 function trigger()
     local nfa_me = nfa_helper:get_info()
     local actor = contract_helper:get_actor_info(nfa_me.id)

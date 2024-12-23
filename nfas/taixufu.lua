@@ -1,4 +1,3 @@
-heart_beat = { consequence = true }
 active = { consequence = true }
 place_in = { consequence = true }
 take_out = { consequence = true }
@@ -37,7 +36,7 @@ function do_active()
     nfa_helper:enable_tick()
 end
 
-function do_heart_beat()
+function on_heart_beat()
     local nfa = nfa_helper:get_info()
     assert(nfa.qi >= nfa.data.action_qi_threshold, "真气不足，无法运转")
     assert(contract_helper:is_nfa_valid(nfa.parent) == false, "一次性法宝使用时不能放置在其他地方")

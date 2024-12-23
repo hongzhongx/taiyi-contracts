@@ -3,8 +3,6 @@ long = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
 
-heart_beat = { consequence = true }
-
 function init_data()
     return {
         is_zone = true,
@@ -31,7 +29,7 @@ function eval_map()
     return { "" }
 end
 
-function do_heart_beat()
+function on_heart_beat()
     contract_helper:log("这里是&HIC&大梁城&NOR&的心跳。")
 end
 

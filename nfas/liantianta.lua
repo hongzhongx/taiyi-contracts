@@ -1,4 +1,3 @@
-heart_beat = { consequence = true }
 active = { consequence = true }
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
@@ -30,7 +29,7 @@ function do_active()
     nfa_helper:enable_tick()
 end
 
-function do_heart_beat()
+function on_heart_beat()
     -- 转化自身的元气到金石    
     local nfa = nfa_helper:get_info()
 	-- contract_helper:log(string.format('nfa qi=%d', nfa.qi))
