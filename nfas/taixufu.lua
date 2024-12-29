@@ -45,12 +45,12 @@ function on_heart_beat()
     assert(nfa_data.target_zone ~= -1 and nfa_data.contract_name ~= "", "符箓无效，区域或者天道合约名称没有设置好")
     assert(contract_helper:is_nfa_valid(nfa_data.target_zone), "法宝未设置有效区域")
 
-    local nfa = contract_helper:get_nfa_info(nfa_data.target_zone)
-    assert(nfa.data.is_zone, "目标不是一个区域")
-    local zone = contract_helper:get_zone_info(nfa.id)
+    local nfa_zone = contract_helper:get_nfa_info(nfa_data.target_zone)
+    assert(nfa_zone.data.is_zone, "目标不是一个区域")
+    local zone = contract_helper:get_zone_info(nfa_zone.id)
 
     -- 区域nfa的symbol不会改变，仅仅改变nfa的主合约
-    contract_helper:change_nfa_contract(nfa.id, nfa_data.contract_name)
+    contract_helper:change_nfa_contract(nfa_zone.id, nfa_data.contract_name)
     contract_helper:log(string.format('整个"%s"发生了一些变化', zone.name))
 
     -- 完成功能，清除目标
