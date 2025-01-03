@@ -3,14 +3,12 @@ YANG_ACCURACY = 1000
 
 function init()
     assert(contract_helper:is_owner(), 'no auth')
-    contract_helper:read_chain({ public_data = {rate=true, max_bet = true} })
-    public_data.rate  = 98
-    public_data.max_bet = 1000000 
-	contract_helper:write_chain({ public_data = {rate=true, max_bet=true} })
+    local public_data = {rate  = 98, max_bet = 1000000}
+	contract_helper:write_contract_data(public_data, {rate=true, max_bet=true})
 end
 
 function bet(num, amount)
-    contract_helper:read_chain({ public_data = {rate=true, max_bet=true} })
+    local public_data = contract_helper:read_contract_data({rate=true, max_bet=true})
 
     num = tonumber(num)
     amount = tonumber(amount) * YANG_ACCURACY

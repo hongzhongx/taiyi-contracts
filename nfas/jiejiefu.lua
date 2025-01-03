@@ -41,8 +41,8 @@ function on_heart_beat()
     assert(nfa.qi >= nfa.data.action_qi_threshold, "真气不足，无法运转")
     assert(contract_helper:is_nfa_valid(nfa.parent) == false, "一次性法宝使用时不能放置在其他地方")
 
-    nfa_helper:read_chain({ from_zone=true, to_zone=true })
-    assert(nfa_data.from_zone ~= 1 and nfa_data.to_zone ~= 1, "符箓无效，连接区域没有设置好")
+    local nfa_data = nfa_helper:read_contract_data({ from_zone=true, to_zone=true })
+    assert(nfa_data.from_zone ~= -1 and nfa_data.to_zone ~= -1, "符箓无效，连接区域没有设置好")
 
     local nfa_a = contract_helper:get_nfa_info(nfa_data.from_zone)
     assert(nfa_a.data.is_zone, "起点不是一个区域")
@@ -56,7 +56,7 @@ function on_heart_beat()
     -- 完成功能，清除目标
     nfa_data.from_zone = -1
     nfa_data.to_zone = -1
-    nfa_helper:write_chain({ from_zone=true, to_zone=true })
+    nfa_helper:write_contract_data(nfa_data, { from_zone=true, to_zone=true })
 
     -- 将真气归还给法宝创建者
     nfa_helper:withdraw_to(nfa.creator_account, nfa.qi, "QI", true)
@@ -81,9 +81,9 @@ function do_setup(from_zone_name, to_zone_name)
     local to = contract_helper:get_zone_info_by_name(to_zone_name)
 
     -- 记录安装目标实体
-    nfa_helper:read_chain({ from_zone=true, to_zone=true })
+    local nfa_data = nfa_helper:read_contract_data({ from_zone=true, to_zone=true })
     nfa_data.from_zone = from.nfa_id
     nfa_data.to_zone = to.nfa_id
-	nfa_helper:write_chain({ from_zone=true, to_zone=true })
+	nfa_helper:write_contract_data(nfa_data, { from_zone=true, to_zone=true })
 end
 

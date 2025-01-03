@@ -37,7 +37,7 @@ function do_active()
 end
 
 function on_heart_beat()
-    nfa_helper:read_chain({ total_qi_conversion=true, target=true })
+    local nfa_data = nfa_helper:read_contract_data({ total_qi_conversion=true, target=true })
 
     -- 转化自身的元气到食物
     local nfa = nfa_helper:get_info()
@@ -46,7 +46,7 @@ function on_heart_beat()
         nfa_helper:convert_qi_to_resource(1000, "FOOD")
         -- 记录转化总量
         nfa_data.total_qi_conversion = nfa_data.total_qi_conversion + 1000
-        nfa_helper:write_chain({ total_qi_conversion=true })
+        nfa_helper:write_contract_data(nfa_data, { total_qi_conversion=true })
     end
 
     if contract_helper:is_nfa_valid(nfa.parent) then
@@ -66,7 +66,7 @@ function on_heart_beat()
         end
         -- 完成功能，清除目标
         nfa_data.target = -1
-        nfa_helper:write_chain({ target=true })
+        nfa_helper:write_contract_data(nfa_data, { target=true })
     end
 end
 
@@ -82,10 +82,10 @@ function do_install(parent)
     do_place_in(parent)
 
     -- 记录安装目标实体并初始化转化记录
-    nfa_helper:read_chain({ target=true, total_qi_conversion=true })
+    local nfa_data = nfa_helper:read_contract_data({ target=true, total_qi_conversion=true })
     nfa_data.target = parent
     nfa_data.total_qi_conversion = 0;
-	nfa_helper:write_chain({ target=true, total_qi_conversion=true })
+	nfa_helper:write_contract_data(nfa_data, { target=true, total_qi_conversion=true })
 end
 
 function do_take_out()
@@ -97,7 +97,7 @@ function do_uninstall()
     do_take_out()
     
     -- 清除安装目标实体
-    nfa_helper:read_chain({ target=true })
+    local nfa_data = nfa_helper:read_contract_data({ target=true })
     nfa_data.target = -1
-	nfa_helper:write_chain({ target=true })
+	nfa_helper:write_contract_data(nfa_data, { target=true })
 end

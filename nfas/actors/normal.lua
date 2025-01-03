@@ -9,6 +9,8 @@ go = { consequence = true }
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
 exploit = { consequence = true }
+start_cultivation = { consequence = true }
+stop_cultivation = { consequence = true }
 
 function init_data()
     return {
@@ -54,6 +56,16 @@ end
 function do_exploit()
     local exploit = import_contract("contract.cmds.std.exploit").exploit
     exploit()
+end
+
+function do_start_cultivation()
+    local start = import_contract("contract.cmds.std.cultivation").start
+    start()
+end
+
+function do_stop_cultivation()
+    local stop = import_contract("contract.cmds.std.cultivation").stop
+    stop()
 end
 
 function on_heart_beat()
