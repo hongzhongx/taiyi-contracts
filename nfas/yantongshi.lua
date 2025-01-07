@@ -2,6 +2,7 @@ born_actor = { consequence = true }
 upgrade_actor = { consequence = true }
 place_in = { consequence = true }
 take_out = { consequence = true }
+deposit_resource = { consequence = true }
 
 -- 返回一个table
 function init_data()
@@ -11,11 +12,17 @@ function init_data()
     }
 end
 
+function do_deposit_resource(amount, symbol)
+    assert(amount > 0, "设置的资源数量无效")
+    nfa_helper:deposit_from(contract_base_info.caller, amount, symbol, true)
+end
+
 -- 出生角色
--- gender; 0=random, -1=男, 1=女, -2=男生女相, 2=女生男相
--- sexuality; 0=无性取向，1=喜欢男性，2=喜欢女性，3=双性恋
+-- gender: 0=random, -1=男, 1=女, -2=男生女相, 2=女生男相
+-- sexuality: 0=无性取向，1=喜欢男性，2=喜欢女性，3=双性恋
+-- material_ratio: 将法宝材料注入到角色体内的比率万分比，[0, 10000]
 -- 注意，这个行为的调用是从法宝的角度进来的，所以caller nfa是法宝，不是角色
-function do_born_actor(actor_name, gender, sexuality, init_attrs)
+function do_born_actor(actor_name, gender, sexuality, init_attrs, material_ratio)
     local nfa = nfa_helper:get_info()
     assert(contract_helper:is_nfa_valid(nfa.parent), "法宝未安置好")
     local parent_nfa = contract_helper:get_nfa_info(nfa.parent)
@@ -32,11 +39,31 @@ function do_born_actor(actor_name, gender, sexuality, init_attrs)
     -- update actor info after born
     actor = contract_helper:get_actor_info_by_name(actor_name)
     assert(actor.born == true, string.format('"%s"出生失败', actor_name))
+
+    -- 按等比率将法宝托管的资源材料注入物质给角色NFA，这样角色的五行将由法宝资源确定
+    local resources = contract_helper:get_nfa_resources(nfa.id)
+    local gold = resources.gold * material_ratio / 10000
+    local food = resources.food * material_ratio / 10000
+    local wood = resources.wood * material_ratio / 10000
+    local fabric = resources.fabric * material_ratio / 10000
+    local herb = resources.herb * material_ratio / 10000
+    if gold > 0 then
+        nfa_helper:inject_material_to(actor.nfa_id, gold, "GOLD", true)
+    end
+    if food > 0 then
+        nfa_helper:inject_material_to(actor.nfa_id, food, "FOOD", true)
+    end
+    if wood > 0 then
+        nfa_helper:inject_material_to(actor.nfa_id, wood, "WOOD", true)
+    end
+    if fabric > 0 then
+        nfa_helper:inject_material_to(actor.nfa_id, fabric, "FABR", true)
+    end
+    if herb > 0 then
+        nfa_helper:inject_material_to(actor.nfa_id, herb, "HERB", true)
+    end
+
     contract_helper:log(string.format('%d年%d月，"%s"在%s出生了', actor.born_vyears, actor.born_vmonths, actor_name, zone.name))
-
-    -- grow as first birthday
-    -- try_trigger_actor_talents(act, 0);
-
 end
 
 -- 升级角色（主合约升级）

@@ -1,6 +1,7 @@
 active = { consequence = true }
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
+withdraw_resources = { consequence = true }
 
 -- 返回一个table
 function init_data()
@@ -23,6 +24,15 @@ function do_withdraw_qi(amount)
 
     assert(contract_base_info.caller == nfa.owner_account, "无权从法宝提取真气")
     nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
+end
+
+function do_withdraw_resources()
+    local nfa = nfa_helper:get_info()
+    local resource = contract_helper:get_nfa_resources(nfa.id)
+    assert(resource.gold > 0, "法宝没有资源")
+
+    assert(contract_base_info.caller == nfa.owner_account, "无权从法宝提取资源")
+    nfa_helper:withdraw_to(nfa.owner_account, resource.gold, "GOLD", true)
 end
 
 function do_active()

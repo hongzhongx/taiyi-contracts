@@ -38,9 +38,9 @@ function eval_hp(target, option)
     hp(target, option)
 end
 
-function eval_resource(target)
+function eval_resource(target, option)
     local resource = import_contract("contract.cmds.actor.resource").resource
-    resource(target)
+    resource(target, option)
 end
 
 function eval_map(target)

@@ -50,7 +50,7 @@ function on_actor_exploit(actor_nfa_id)
     local nfa_me = nfa_helper:get_info()
     assert(nfa_me.data.is_zone == true, "只有区域才能调用这个入口")
 
-    local resources = contract_helper:get_nfa_resources(nfa_me.id)
+    local resources = contract_helper:get_nfa_materials(nfa_me.id)
     local reward_gold = 0
     local reward_food = 0
     local reward_wood = 0
@@ -76,23 +76,23 @@ function on_actor_exploit(actor_nfa_id)
     local actor = contract_helper:get_actor_info(actor_nfa_id)
 
     if reward_gold > 0 then
-        nfa_helper:transfer_to(actor_nfa_id, reward_gold, "GOLD", false)
+        nfa_helper:separate_material_out(actor_nfa_id, reward_gold, "GOLD", false)
         contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&金石。', tiandao.v_years, tiandao.v_months, actor.name, reward_gold/1000000.0))
     end
     if reward_food > 0 then
-        nfa_helper:transfer_to(actor_nfa_id, reward_food, "FOOD", false)
+        nfa_helper:separate_material_out(actor_nfa_id, reward_food, "FOOD", false)
         contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&食物。', tiandao.v_years, tiandao.v_months, actor.name, reward_food/1000000.0))
     end
     if reward_wood > 0 then
-        nfa_helper:transfer_to(actor_nfa_id, reward_wood, "WOOD", false)
+        nfa_helper:separate_material_out(actor_nfa_id, reward_wood, "WOOD", false)
         contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&木材。', tiandao.v_years, tiandao.v_months, actor.name, reward_wood/1000000.0))
     end
     if reward_fabric > 0 then
-        nfa_helper:transfer_to(actor_nfa_id, reward_fabric, "FABR", false)
+        nfa_helper:separate_material_out(actor_nfa_id, reward_fabric, "FABR", false)
         contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&织物。', tiandao.v_years, tiandao.v_months, actor.name, reward_fabric/1000000.0))
     end
     if reward_herb > 0 then
-        nfa_helper:transfer_to(actor_nfa_id, reward_herb, "HERB", false)
+        nfa_helper:separate_material_out(actor_nfa_id, reward_herb, "HERB", false)
         contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&药材。', tiandao.v_years, tiandao.v_months, actor.name, reward_herb/1000000.0))
     end
 

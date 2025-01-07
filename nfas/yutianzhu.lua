@@ -50,17 +50,17 @@ function on_heart_beat()
     end
 
     if contract_helper:is_nfa_valid(nfa.parent) then
-        -- 传递资源给父实体
+        -- 注入资源给父实体
         local resource = contract_helper:get_nfa_resources(nfa.id)
         if resource.food > 0 then
-            nfa_helper:transfer_to(nfa.parent, resource.food, "FOOD", true)        
+            nfa_helper:inject_material_to(nfa.parent, resource.food, "FOOD", true)
         end        
     end
 
     -- 尝试转化目标区域类型
     if nfa_data.target ~= -1 and nfa_data.total_qi_conversion >= nfa.data.conversion_threshold then
         local target_nfa = contract_helper:get_nfa_info(nfa_data.target)
-        if target_nfa.data.is_zone then            
+        if target_nfa.data.is_zone then
             contract_helper:change_zone_type(nfa_data.target, "NONGTIAN")
             contract_helper:log(string.format('区域#%d被转化为农田', nfa_data.target))
         end
