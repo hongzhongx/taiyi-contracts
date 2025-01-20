@@ -1,3 +1,5 @@
+show_name = { consequence = false }
+
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
 active = { consequence = true }
@@ -15,6 +17,11 @@ function init_data()
         total_qi_conversion = 0,
         conversion_threshold = 10000 --转化的总气量超过这个阈值，则转化目标区域类型为田地
     }
+end
+
+function eval_show_name()
+    local nfa_data = nfa_helper:read_contract_data({ name=true })
+	contract_helper:log(nfa_data.name)
 end
 
 function do_deposit_qi(amount)
