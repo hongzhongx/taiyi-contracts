@@ -19,5 +19,5 @@ function map(target)
         end
     end
 
-    contract_helper:log(map_str)
+    contract_helper:narrate(map_str, false)
 end

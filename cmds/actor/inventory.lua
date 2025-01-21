@@ -10,12 +10,12 @@ function inventory(target)
         elseif contract_helper:is_zone_valid_by_name(target) then
             obj_info = contract_helper:get_zone_info_by_name(target)
         else
-            contract_helper:log(string.format('还无法查看%s。', target))
+            contract_helper:narrate(string.format('还无法查看%s。', target), false)
             return
         end
         nfa_info = contract_helper:get_nfa_info(obj_info.nfa_id)
     else
-        contract_helper:log('无法查看未知事物。')
+        contract_helper:narrate('无法查看未知事物。', false)
         return
     end
 
@@ -23,18 +23,18 @@ function inventory(target)
     if #inv == 0 then
         if nfa_info.data.is_actor then
             if nfa_info.id == nfa_me.id then
-                contract_helper:log("目前你身上没有任何东西。")
+                contract_helper:narrate("目前你身上没有任何东西。", false)
             else
-                contract_helper:log(string.format("%s身上没有携带任何东西。", target));
+                contract_helper:narrate(string.format("%s身上没有携带任何东西。", target), false);
             end
         elseif nfa_info.data.is_zone then
             if nfa_info.id == nfa_me.id then
-                contract_helper:log("目前你没有任何东西。")
+                contract_helper:narrate("目前你没有任何东西。", false)
             else
-                contract_helper:log(string.format("%s里没有任何东西。", target));
+                contract_helper:narrate(string.format("%s里没有任何东西。", target), false);
             end
         else
-            contract_helper:log(string.format("%s没有包含任何东西。", target));
+            contract_helper:narrate(string.format("%s没有包含任何东西。", target), false);
         end
         return
     end
@@ -92,5 +92,5 @@ function inventory(target)
         end
         str = str .. '&HIC&' .. n .. "&NOR&\n"
     end
-    contract_helper:log(str)
+    contract_helper:narrate(str, false)
 end

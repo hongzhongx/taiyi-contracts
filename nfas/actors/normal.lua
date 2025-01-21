@@ -71,7 +71,7 @@ end
 function on_heart_beat()
     local nfa_me = nfa_helper:get_info()
     local actor = contract_helper:get_actor_info(nfa_me.id)
-    contract_helper:log(string.format("这里是&YEL&%s&NOR&的心跳。", actor.name))
+    contract_helper:narrate(string.format("这里是&YEL&%s&NOR&的心跳。", actor.name), false)
 end
 
 function do_deposit_qi(amount)
@@ -91,9 +91,8 @@ end
 
 -- 成长回调函数
 function on_grown()
-    local tiandao = contract_helper:get_tiandao_property()
+    -- local tiandao = contract_helper:get_tiandao_property()
     local nfa_me = nfa_helper:get_info()
     local actor = contract_helper:get_actor_info(nfa_me.id)
-    contract_helper:log(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&成长到&YEL&%d&NOR&岁，健康&YEL&%d&NOR&。',
-        tiandao.v_years, tiandao.v_months, actor.name, actor.age, actor.health))
+    contract_helper:narrate(string.format('&YEL&%s&NOR&成长到&YEL&%d&NOR&岁，健康&YEL&%d&NOR&。', actor.name, actor.age, actor.health), true)
 end

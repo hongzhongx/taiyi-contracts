@@ -15,7 +15,7 @@ function go(dir)
     local err = contract_helper:move_actor(actor_me.name, target_zone_name)
     assert(err == '', string.format('%s。', err))
 
-    -- contract_helper:log(string.format('&YEL&%s&NOR&来到了&HIC&%s&NOR&。', me.name, target_zone))
+    -- contract_helper:narrate(string.format('&YEL&%s&NOR&来到了&HIC&%s&NOR&。', me.name, target_zone), false)
     local look = import_contract("contract.cmds.std.look").look
     look("")
 end

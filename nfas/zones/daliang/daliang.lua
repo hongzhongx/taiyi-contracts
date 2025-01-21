@@ -30,16 +30,16 @@ function eval_map()
 end
 
 function on_heart_beat()
-    contract_helper:log("这里是&HIC&大梁城&NOR&的心跳。")
+    contract_helper:narrate("这里是&HIC&大梁城&NOR&的心跳。", false)
 end
 
 -- 仅由move_actor回调
 function on_actor_enter(actor_nfa_id)
-    contract_helper:log("这里是&HIC&大梁&NOR&城门。这位朋友，本司看你筋骨不凡，就送你一本&HIM&路引&NOR&。")
+    contract_helper:narrate("这里是&HIC&大梁&NOR&城门。这位朋友，本司看你筋骨不凡，就送你一本&HIM&路引&NOR&。", false)
     local nft_id = contract_helper:create_nfa(actor_nfa_id, "nfa.item.luyin", { referee = "监天司", destination = "后蜀"}, true)
     Item = import_contract('contract.inherit.item').Item 
     local luyin = Item:new(contract_helper:get_nfa_info(nft_id))
 
     local actor = contract_helper:get_actor_info(actor_nfa_id)
-    contract_helper:log(string.format('%s收到&YEL&%s&NOR&颁发的%s，可以去到&HIC&%s&NOR&', actor.name, luyin:data().referee, luyin:short(), luyin:data().destination))
+    contract_helper:narrate(string.format('%s收到&YEL&%s&NOR&颁发的%s，可以去到&HIC&%s&NOR&', actor.name, luyin:data().referee, luyin:short(), luyin:data().destination), false)
 end

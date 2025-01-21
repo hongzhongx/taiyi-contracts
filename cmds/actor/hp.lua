@@ -68,7 +68,7 @@ function hp(target, option)
         elseif contract_helper:is_zone_valid(nfa_info.id) then
             obj_info = contract_helper:get_zone_info(nfa_info.id)
         else
-            contract_helper:log('还无法查看。')
+            contract_helper:narrate('还无法查看。', false)
             return
         end
     elseif type(target) == "string" then
@@ -77,22 +77,22 @@ function hp(target, option)
         elseif contract_helper:is_zone_valid_by_name(target) then
             obj_info = contract_helper:get_zone_info_by_name(target)
         else
-            contract_helper:log(string.format('还无法查看%s。', target))
+            contract_helper:narrate(string.format('还无法查看%s。', target), false)
             return
         end
         nfa_info = contract_helper:get_nfa_info(obj_info.nfa_id)
     else
-        contract_helper:log('无法查看未知事物。')
+        contract_helper:narrate('无法查看未知事物。', false)
         return
     end
 
     if nfa_info.data.is_actor ~= true then
-        contract_helper:log("目前只能查看角色。")
+        contract_helper:narrate("目前只能查看角色。", false)
         return
     end
 
     if not obj_info.born then
-        contract_helper:log("还没有出生呐，察看什么？")
+        contract_helper:narrate("还没有出生呐，察看什么？", false)
     elseif option == "" then
         Zone = import_contract("contract.inherit.zone").Zone
         local location_zone = Zone:new(contract_helper:get_zone_info_by_name(obj_info.location))
@@ -111,7 +111,7 @@ function hp(target, option)
             status_color(obj_info.health, obj_info.health_max), obj_info.health, obj_info.health_max,
             status_color(obj_info.age, 100), obj_info.age, 100)
         ss = ss .. '&HIC&≡&HIY&----------------------------------------------------------------&HIC&≡&NOR&\n'
-        contract_helper:log(ss)
+        contract_helper:narrate(ss, false)
     elseif option == '-c' then
         local attributes = contract_helper:get_actor_core_attributes(obj_info.nfa_id)
         local ss = "你目前的状态属性如下：\n"
@@ -129,6 +129,6 @@ function hp(target, option)
             status_color(attributes.charm, attributes.charm_max), attributes.charm, attributes.charm_max,
             status_color(attributes.mood, attributes.mood_max), attributes.mood, attributes.mood_max)
         ss = ss .. '&HIC&≡&HIY&----------------------------------------------------------------&HIC&≡&NOR&\n'
-        contract_helper:log(ss)
+        contract_helper:narrate(ss, false)
     end
 end

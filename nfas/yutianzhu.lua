@@ -1,4 +1,5 @@
-show_name = { consequence = false }
+short = { consequence = false }
+long = { consequence = false }
 
 deposit_qi = { consequence = true }
 withdraw_qi = { consequence = true }
@@ -19,9 +20,14 @@ function init_data()
     }
 end
 
-function eval_show_name()
+function eval_short()
     local nfa_data = nfa_helper:read_contract_data({ name=true })
-	contract_helper:log(nfa_data.name)
+	return { nfa_data.name }
+end
+
+function eval_long()
+    local nfa_data = nfa_helper:read_contract_data({ name=true })
+	return { "这是一颗" .. nfa_data.name .. "，这个法宝用来生产食物，并能将所在区域转变成农田" }
 end
 
 function do_deposit_qi(amount)
@@ -69,7 +75,7 @@ function on_heart_beat()
         local target_nfa = contract_helper:get_nfa_info(nfa_data.target)
         if target_nfa.data.is_zone then
             contract_helper:change_zone_type(nfa_data.target, "NONGTIAN")
-            contract_helper:log(string.format('区域#%d被转化为农田', nfa_data.target))
+            contract_helper:narrate(string.format('区域#%d被转化为农田', nfa_data.target), true)
         end
         -- 完成功能，清除目标
         nfa_data.target = -1

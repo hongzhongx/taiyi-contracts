@@ -51,7 +51,7 @@ function on_heart_beat()
 
     -- 区域nfa的symbol不会改变，仅仅改变nfa的主合约
     contract_helper:change_nfa_contract(nfa_zone.id, nfa_data.contract_name)
-    contract_helper:log(string.format('整个"%s"发生了一些变化', zone.name))
+    contract_helper:narrate(string.format('整个"%s"发生了一些变化', zone.name), true)
 
     -- 完成功能，清除目标
     nfa_data.target_zone = -1

@@ -34,5 +34,5 @@ end
 
 function on_actor_enter(actor_nfa_id)
     local actor = contract_helper:get_actor_info(actor_nfa_id)
-    contract_helper:log(string.format('%s来到了村口亭', actor.name))
+    contract_helper:narrate(string.format('%s来到了村口亭', actor.name), false)
 end

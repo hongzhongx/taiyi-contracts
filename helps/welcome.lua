@@ -16,5 +16,5 @@ local ss = [[
 ]]
 
 function welcome()
-	contract_helper:log(ss)
+	contract_helper:narrate(ss, false)
 end

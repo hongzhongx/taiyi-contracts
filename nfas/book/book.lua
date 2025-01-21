@@ -32,7 +32,7 @@ function do_set_page(page_id, page_nfa_id)
 
     nfa_helper:add_child(page_nfa_id)
 
-	contract_helper:log(string.format('设置书页（%d）为本书第%d页', page_nfa_id, page_id))
+	contract_helper:narrate(string.format('设置书页（%d）为本书第%d页', page_nfa_id, page_id), false)
 end
 
 function do_place_in(parent)
@@ -50,7 +50,7 @@ end
 function eval_read(page_id)
     if page_id == 0 then
         local nfa_data = nfa_helper:read_contract_data({ name=true })
-        contract_helper:log(nfa_data.name)
+        contract_helper:narrate(nfa_data.name, false)
     else
         local nfa_data = nfa_helper:read_contract_data({ pages=true })
         local pages = nfa_data.pages or {}
@@ -59,7 +59,7 @@ function eval_read(page_id)
         if page_nfa_id ~= nil then
             contract_helper:eval_nfa_action(page_nfa_id, "read", {})
         else
-            contract_helper:log(string.format('这本书没有第%d页', page_id))
+            contract_helper:narrate(string.format('这本书没有第%d页', page_id), false)
         end
     end
 end

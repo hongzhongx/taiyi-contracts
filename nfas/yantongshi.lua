@@ -1,4 +1,5 @@
-show_name = { consequence = false }
+short = { consequence = false }
+long = { consequence = false }
 
 born_actor = { consequence = true }
 upgrade_actor = { consequence = true }
@@ -14,9 +15,14 @@ function init_data()
     }
 end
 
-function eval_show_name()
+function eval_short()
     local nfa_data = nfa_helper:read_contract_data({ name=true })
-	contract_helper:log(nfa_data.name)
+	return { nfa_data.name }
+end
+
+function eval_long()
+    local nfa_data = nfa_helper:read_contract_data({ name=true })
+	return { "这是一块" .. nfa_data.name .. "，这个法宝用来出生和升级角色" }
 end
 
 function do_deposit_resource(amount, symbol)
@@ -71,7 +77,7 @@ function do_born_actor(actor_name, gender, sexuality, init_attrs, material_ratio
         nfa_helper:inject_material_to(actor.nfa_id, herb, "HERB", true)
     end
 
-    contract_helper:log(string.format('%d年%d月，"%s"在%s出生了', actor.born_vyears, actor.born_vmonths, actor_name, zone.name))
+    contract_helper:narrate(string.format('%d年%d月，"%s"在%s出生了', actor.born_vyears, actor.born_vmonths, actor_name, zone.name), false)
 end
 
 -- 升级角色（主合约升级）
@@ -89,7 +95,7 @@ function do_upgrade_actor(actor_name)
 
     -- 角色nfa的symbol不会改变，仅仅改变nfa的主合约
     contract_helper:change_nfa_contract(actor.nfa_id, "contract.actor.normal")
-    contract_helper:log(string.format('&YEL&%s&NOR&整个人发生了一些变化', actor_name))
+    contract_helper:narrate(string.format('&YEL&%s&NOR&整个人发生了一些变化', actor_name), true)
 end
 
 function do_set_zone(zone_nfa_id)
@@ -102,5 +108,5 @@ function do_set_zone(zone_nfa_id)
     nfa_data.set_zone = zone_nfa_id
 	nfa_helper:write_contract_data(nfa_data, { set_zone=true })
 
-    contract_helper:log(string.format('&YEL&%s&NOR&写上了一个地区的名字——&HIC&%s&HIC&', nfa_data.name, zone.name))
+    contract_helper:narrate(string.format('&YEL&%s&NOR&写上了一个地区的名字——&HIC&%s&HIC&', nfa_data.name, zone.name), false)
 end

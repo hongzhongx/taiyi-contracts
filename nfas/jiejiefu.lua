@@ -51,7 +51,7 @@ function on_heart_beat()
     assert(nfa_b.data.is_zone, "终点不是一个区域")
 
     contract_helper:connect_zones(nfa_data.from_zone, nfa_data.to_zone)
-    contract_helper:log(string.format('%s可以通向%s了', contract_helper:get_zone_info(nfa_data.from_zone).name, contract_helper:get_zone_info(nfa_data.to_zone).name))
+    contract_helper:narrate(string.format('%s可以通向%s了', contract_helper:get_zone_info(nfa_data.from_zone).name, contract_helper:get_zone_info(nfa_data.to_zone).name), true)
 
     -- 完成功能，清除目标
     nfa_data.from_zone = -1

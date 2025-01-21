@@ -13,6 +13,6 @@ function trigger()
 
     nfa_helper:modify_actor_attributes({ mood = 5 })
 
-    contract_helper:log(string.format('由于&YEL&乐观&NOR&天赋激发，%s的&HIC&快乐&NOR&上限增加了。', actor.name))
+    contract_helper:narrate(string.format('由于&YEL&乐观&NOR&天赋激发，%s的&HIC&快乐&NOR&上限增加了。', actor.name), false)
     return { triggered = true }
 end
