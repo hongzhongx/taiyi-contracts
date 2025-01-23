@@ -11,6 +11,7 @@ withdraw_qi = { consequence = true }
 exploit = { consequence = true }
 start_cultivation = { consequence = true }
 stop_cultivation = { consequence = true }
+eat = { consequence = true }
 
 function init_data()
     return {
@@ -51,6 +52,11 @@ end
 function do_go(dir)
     local go = import_contract("contract.cmds.std.gocmd").go
     go(dir)
+end
+
+function do_eat(something)
+    local eat = import_contract("contract.cmds.std.eat").eat
+    eat(something)
 end
 
 function do_exploit()

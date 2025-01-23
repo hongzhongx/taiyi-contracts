@@ -28,8 +28,8 @@ function resource(target, option)
             resources.gold / 100000.0, resources.food / 1000000.0)
         ss = ss .. string.format('&HIC&【 木 材 】  &GRN&%5.6f               &HIC&【 织 物 】    &GRN&%5.6f\n',
             resources.wood / 100000.0, resources.fabric / 1000000.0)
-        ss = ss .. string.format('&HIC&【 药 材 】  &GRN&%5.6f\n',
-            resources.herb / 100000.0)
+        ss = ss .. string.format('&HIC&【 药 材 】  &GRN&%5.6f               &HIC&【 真 气 】    &YEL&%5.6f\n',
+            resources.herb / 100000.0, nfa_me.qi / 1000000.0)
         ss = ss .. '&HIC&≡&HIY&----------------------------------------------------------------&HIC&≡&NOR&\n'
         contract_helper:narrate(ss, false)
     elseif option == '-m' then
