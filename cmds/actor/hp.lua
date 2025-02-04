@@ -117,7 +117,7 @@ function hp(target, option)
         local ss = "你目前的状态属性如下：\n"
         ss = ss .. '&HIC&≡&HIY&----------------------------------------------------------------&HIC&≡&NOR&\n'
         ss = ss .. string.format('&HIC&【 膂 力 】 %s%5d/ %5d               &HIC&【 体 质 】 %s%5d / %5d\n',
-            status_color(attributes.strength, attributes.strength_max), obj_info.health, obj_info.health_max,
+            status_color(attributes.strength, attributes.strength_max), attributes.strength, attributes.strength_max,
             status_color(attributes.physique, attributes.physique_max), attributes.physique, attributes.physique_max)
         ss = ss .. string.format('&HIC&【 灵 敏 】 %s%5d/ %5d               &HIC&【 根 骨 】 %s%5d / %5d\n',
             status_color(attributes.agility, attributes.agility_max), attributes.agility, attributes.agility_max,

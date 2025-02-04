@@ -1,3 +1,6 @@
+short = { consequence = false }
+long = { consequence = false }
+
 active = { consequence = true }
 place_in = { consequence = true }
 take_out = { consequence = true }
@@ -17,6 +20,16 @@ function init_data()
     }
 end
 
+function eval_short()
+    local nfa_data = nfa_helper:read_contract_data({ name=true })
+	return { nfa_data.name }
+end
+
+function eval_long()
+    local nfa_data = nfa_helper:read_contract_data({ name=true })
+	return { "这是一张" .. nfa_data.name .. "，这个法宝用来升级区域" }
+end
+
 function do_deposit_qi(amount)
     assert(amount > 0, "设置的真气无效")
     nfa_helper:deposit_from(contract_base_info.caller, amount, "QI", true)
@@ -34,6 +47,7 @@ end
 
 function do_active()
     nfa_helper:enable_tick()
+    contract_helper:narrate('如果一切顺利，稍后此符就能让区域发生改变。', false)
 end
 
 function on_heart_beat()

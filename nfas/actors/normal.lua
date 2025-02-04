@@ -49,17 +49,26 @@ function eval_map(target)
     map(target)
 end
 
+function check_live()
+    local nfa_me = nfa_helper:get_info()
+    local actor_me = contract_helper:get_actor_info(nfa_me.id)
+    assert(actor_me.health > 0, string.format('&YEL&%s&NOR&已经去世了', actor_me.name))
+end
+
 function do_go(dir)
+    check_live()
     local go = import_contract("contract.cmds.std.gocmd").go
     go(dir)
 end
 
 function do_eat(something)
+    check_live()
     local eat = import_contract("contract.cmds.std.eat").eat
     eat(something)
 end
 
 function do_exploit(something)
+    check_live()
     if something == "" then
         local exploit = import_contract("contract.cmds.std.exploit").exploit
         exploit()
