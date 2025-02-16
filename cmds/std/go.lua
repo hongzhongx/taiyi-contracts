@@ -16,6 +16,5 @@ function go(dir)
     assert(err == '', string.format('%s。', err))
 
     -- contract_helper:narrate(string.format('&YEL&%s&NOR&来到了&HIC&%s&NOR&。', me.name, target_zone), false)
-    local look = import_contract("contract.cmds.std.look").look
-    look("")
+    contract_helper:eval_nfa_action(nfa_me.id, "look", {""})
 end

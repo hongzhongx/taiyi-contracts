@@ -19,7 +19,7 @@ function inventory(target)
         return
     end
 
-    local inv = contract_helper:list_nfa_inventory(nfa_info.id)
+    local inv = contract_helper:list_nfa_inventory(nfa_info.id, "")
     if #inv == 0 then
         if nfa_info.data.is_actor then
             if nfa_info.id == nfa_me.id then
