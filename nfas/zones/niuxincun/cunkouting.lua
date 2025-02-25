@@ -25,10 +25,13 @@ function eval_short()
 end
 
 function eval_long()
+    -- 首先显示局部地图
+    local ss = import_contract('contract.map.niuxincun.cunkouting').map_data()
+
     local nfa_me = nfa_helper:get_info()
     local zone_info = contract_helper:get_zone_info(nfa_me.id)
     local chinese_types = import_contract("contract.utils.types")
-    local ss = string.format('这是一处&HIC&%s&NOR&。', chinese_types.zone_type_strings[zone_info.type_id+1])
+    ss = ss .. string.format('    这是一处&HIC&%s&NOR&。', chinese_types.zone_type_strings[zone_info.type_id+1])
     local nfa_data = nfa_helper:read_contract_data({ long=true })
     if nfa_data.long ~= "" then
         return { ss .. nfa_data.long }
