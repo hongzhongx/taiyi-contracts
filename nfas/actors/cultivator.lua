@@ -4,6 +4,7 @@ inventory = { consequence = false }
 hp = { consequence = false }
 resource = { consequence = false }
 map = { consequence = false }
+help = { consequence = false }
 
 go = { consequence = true }
 deposit_qi = { consequence = true }
@@ -23,6 +24,10 @@ end
 
 function get_title()
     return "修真者"
+end
+
+function eval_help()
+    import_contract('contract.help.actors.cultivator').help();
 end
 
 function eval_welcome()

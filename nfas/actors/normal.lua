@@ -4,6 +4,7 @@ inventory = { consequence = false }
 hp = { consequence = false }
 resource = { consequence = false }
 map = { consequence = false }
+help = { consequence = false }
 
 go = { consequence = true }
 deposit_qi = { consequence = true }
@@ -22,6 +23,10 @@ end
 
 function get_title()
     return "普通百姓"
+end
+
+function eval_help()
+    import_contract('contract.help.actors.normal').help();
 end
 
 function eval_welcome()
