@@ -17,7 +17,8 @@ function look(target_name)
             end
             for i, actor in pairs(actors) do
                 if actor.name ~= actor_me.name then
-                    contract_helper:narrate(string.format('        普通百姓&YEL&%s&NOR&', actor.name), false)
+                    local main_contract = contract_helper:get_nfa_info(actor.nfa_id).main_contract
+                    contract_helper:narrate(string.format('        %s&YEL&%s&NOR&', import_contract(main_contract).get_title(), actor.name), false)
                 end
             end
         else
