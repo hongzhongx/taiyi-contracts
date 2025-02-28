@@ -14,9 +14,10 @@ local ss = [[
     &HIG&exploit ["目标"]&NOR&          - 开采和探索，可以获得资源或者物品，目标为空表示探索当前区域，目标为"zone"表示开辟周围的新区域
     &HIG&start_cultivation []&NOR&      - 开始炼气，以自身一半的真气开启一次简单的养生活动
     &HIG&stop_cultivation []&NOR&       - 停止炼气，结束本次养生修真，可以获得少量真气
-    &HIG&deposit_qi ["数量"]&NOR&       - 直接从神魂注入先天真气到角色体内（补气）
-    &HIG&withdraw_qi ["数量"]&NOR&      - 直接从角色体内提取先天真气到神魂
+    &HIG&deposit_qi [数量]&NOR&         - 直接从神魂注入先天真气到角色体内（补气）
+    &HIG&withdraw_qi [数量]&NOR&        - 直接从角色体内提取先天真气到神魂
     &HIG&active []&NOR&                 - 激活内息运转，开启自动炼气
+    &HIG&touch ["物品"]&NOR&            - 触摸一下指定物品
 ]]
 
 function help()

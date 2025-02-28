@@ -22,12 +22,25 @@ function look(target_name)
                 end
             end
         else
-            contract_helper:narrate('什么都看不了', false)
+            contract_helper:narrate('    什么都看不了', false)
         end
     else
         if nfa_me.data.is_actor then
             local actor = contract_helper:get_actor_info(nfa_me.id)
-            contract_helper:narrate(string.format('&YEL&%s&NOR&看了一眼&YEL&%s&NOR&', actor.name, target_name), false)
+            local inv = contract_helper:list_nfa_inventory(nfa_me.id, "")
+            if #inv == 0 then
+                contract_helper:narrate(string.format('    &YEL&%s&NOR&没有&YEL&%s&NOR&', actor.name, target_name), false)
+            else
+                Item = import_contract('contract.inherit.item').Item
+                for i, obj in pairs(inv) do
+                    local item = Item:new(obj)
+                    local short_name = item:short()
+                    if target_name == short_name then
+                        contract_helper:narrate(string.format("    %s", item:long()), false)
+                        break
+                    end
+                end
+            end
         else
             contract_helper:narrate('什么都看不了', false)
         end
