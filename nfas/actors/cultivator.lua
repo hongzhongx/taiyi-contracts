@@ -4,6 +4,7 @@ inventory = { consequence = false }
 hp = { consequence = false }
 resource = { consequence = false }
 map = { consequence = false }
+help = { consequence = false }
 
 go = { consequence = true }
 deposit_qi = { consequence = true }
@@ -12,6 +13,7 @@ exploit = { consequence = true }
 start_cultivation = { consequence = true }
 stop_cultivation = { consequence = true }
 eat = { consequence = true }
+touch = { consequence = true }
 active = { consequence = true }
 
 function init_data()
@@ -23,6 +25,10 @@ end
 
 function get_title()
     return "修真者"
+end
+
+function eval_help()
+    import_contract('contract.help.actors.cultivator').help();
 end
 
 function eval_welcome()
@@ -96,6 +102,10 @@ end
 
 function do_active()
     nfa_helper:enable_tick()
+
+    local nfa_me = nfa_helper:get_info()
+    local actor = contract_helper:get_actor_info(nfa_me.id)
+    contract_helper:narrate(string.format('&YEL&%s&NOR&意灌丹田，尝试导引真气。', actor.name), true)
 end
 
 function on_heart_beat()
@@ -139,4 +149,23 @@ function on_grown()
     local nfa_me = nfa_helper:get_info()
     local actor = contract_helper:get_actor_info(nfa_me.id)
     contract_helper:narrate(string.format('&YEL&%s&NOR&成长到&YEL&%d&NOR&岁，健康&YEL&%d&NOR&。', actor.name, actor.age, actor.health), true)
+end
+
+function do_touch(target_name)
+    local nfa_me = nfa_helper:get_info()
+    local actor = contract_helper:get_actor_info(nfa_me.id)
+    local inv = contract_helper:list_nfa_inventory(nfa_me.id, "")
+    if #inv == 0 then
+        contract_helper:narrate(string.format('    &YEL&%s&NOR&没有&YEL&%s&NOR&', actor.name, target_name), false)
+    else
+        Item = import_contract('contract.inherit.item').Item
+        for i, obj in pairs(inv) do
+            local item = Item:new(obj)
+            local short_name = item:short()
+            if target_name == short_name then
+                contract_helper:do_nfa_action(obj.id, "touch", {actor.name})
+                break
+            end
+        end
+    end
 end
