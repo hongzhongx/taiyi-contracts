@@ -1,4 +1,4 @@
-function inventory(target)
+function inventory(target, options)
     local nfa_me = nfa_helper:get_info()
     local nfa_info = {}
     local obj_info = {}
@@ -61,36 +61,47 @@ function inventory(target)
     local equiped = {};
 
     Item = import_contract('contract.inherit.item').Item
-    for i, obj in pairs(inv) do
-        local item = Item:new(obj)
-        local short_name = item:short()
-        if item_count[short_name] == nil then
-            item_count[short_name] = 1
-        else
-            item_count[short_name] = item_count[short_name] + 1
+    if options == "" then
+        for i, obj in pairs(inv) do
+            local item = Item:new(obj)
+            local short_name = item:short()
+            if item_count[short_name] == nil then
+                item_count[short_name] = 1
+            else
+                item_count[short_name] = item_count[short_name] + 1
+            end
+            if item:unit() then
+                item_unit[short_name] = item:unit()
+            end
         end
-        if item:unit() then
-            item_unit[short_name] = item:unit()
+
+        local handing_name = ""
+
+        for n, ct in pairs(item_count) do
+            if n == handing_name then
+                -- handing now
+                str = str .. "&HIM&□ &NOR&"
+            elseif equiped[n] then
+                str = str .. "&HIC&□ &NOR&"
+            else
+                str = str .. "  "
+            end
+
+            if ct > 1 then
+                local chinese_number = import_contract('contract.utils.numbers').chinese_number
+                str = str .. chinese_number(ct) .. (item_unit[n] or "个")
+            end
+            str = str .. '&HIC&' .. n .. "&NOR&\n"
+        end
+    elseif options == "-l" then
+        -- 逐id列表
+        for i, obj in pairs(inv) do
+            local item = Item:new(obj)
+            local short_name = item:short()
+            str = str .. "  " .. '&HIC&' .. short_name .. "&NOR&"
+            str = str .. string.format("(#%d)\n", obj.id)
         end
     end
 
-    local handing_name = ""
-
-    for n, ct in pairs(item_count) do
-        if n == handing_name then
-            -- handing now
-            str = str .. "&HIM&□ &NOR&"
-        elseif equiped[n] then
-            str = str .. "&HIC&□ &NOR&"
-        else
-            str = str .. "  "
-        end
-
-        if ct > 1 then
-            local chinese_number = import_contract('contract.utils.numbers').chinese_number
-            str = str .. chinese_number(ct) .. (item_unit[n] or "个")
-        end
-        str = str .. '&HIC&' .. n .. "&NOR&\n"
-    end
     contract_helper:narrate(str, false)
 end
