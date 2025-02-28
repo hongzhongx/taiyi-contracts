@@ -40,9 +40,9 @@ function eval_look(target)
     look(target)
 end
 
-function eval_inventory(target)
+function eval_inventory(target, options)
     local inventory = import_contract("contract.cmds.actor.inventory").inventory
-    inventory(target)
+    inventory(target, options)
 end
 
 function eval_hp(target, option)
