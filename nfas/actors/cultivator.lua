@@ -114,14 +114,14 @@ function on_heart_beat()
 
     local nfa_data = nfa_helper:read_contract_data({ last_cultivation_time=true })
     if nfa_data.last_cultivation_time == nil or nfa_data.last_cultivation_time == 0 then
-        if actor.health < 30 then
+        if actor.health < 30 or nfa_me.qi < 50000 then
             contract_helper:narrate(string.format('&YEL&%s&NOR&感到身体太差，准备开始修真。', actor.name), true)
             do_start_cultivation()
             nfa_data.last_cultivation_time = contract_helper:block()
             nfa_helper:write_contract_data(nfa_data, { last_cultivation_time=true })
         end
-    elseif contract_helper:block() >= (nfa_data.last_cultivation_time + 3) then
-        -- 由于心跳间隔通常大于3个块，因此这里总会在下一个心跳中执行
+    elseif contract_helper:block() >= (nfa_data.last_cultivation_time + 200) then
+        -- 大约10分钟后停止修真
         do_stop_cultivation()
         nfa_data.last_cultivation_time = 0
         nfa_helper:write_contract_data(nfa_data, { last_cultivation_time=true })
