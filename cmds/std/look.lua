@@ -17,8 +17,8 @@ function look(target_name)
             end
             for i, actor in pairs(actors) do
                 if actor.name ~= actor_me.name then
-                    local main_contract = contract_helper:get_nfa_info(actor.nfa_id).main_contract
-                    contract_helper:narrate(string.format('        %s&YEL&%s&NOR&', import_contract(main_contract).get_title(), actor.name), false)
+                    local nfa_other = contract_helper:get_nfa_info(actor.nfa_id)
+                    contract_helper:narrate(string.format('        %s&%s&%s&NOR&', import_contract(nfa_other.main_contract).get_title(), (nfa_other.mirage_contract == "" and "YEL" or "HIK"),  actor.name), false)
                 end
             end
         else
