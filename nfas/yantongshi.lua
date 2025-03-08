@@ -4,6 +4,7 @@ long = { consequence = false }
 born_actor = { consequence = true }
 upgrade_actor = { consequence = true }
 upgrade_actor_cultivator = { consequence = true }
+upgrade_actor_with = { consequence = true }
 set_zone = { consequence = true }
 deposit_resource = { consequence = true }
 
@@ -112,6 +113,22 @@ function do_upgrade_actor_cultivator(actor_name)
 
     -- 角色nfa的symbol不会改变，仅仅改变nfa的主合约
     contract_helper:change_nfa_contract(actor.nfa_id, "contract.actor.cultivator")
+    contract_helper:narrate(string.format('&YEL&%s&NOR&整个人发生了一些变化', actor_name), true)
+end
+
+function do_upgrade_actor_with(actor_name, main_contract)
+    local nfa_data = nfa_helper:read_contract_data({ set_zone=true })
+    assert(nfa_data.set_zone ~= -1 and contract_helper:is_nfa_valid(nfa_data.set_zone), "法宝未安置好")
+    local zone_nfa = contract_helper:get_nfa_info(nfa_data.set_zone)
+    assert(zone_nfa.data.is_zone, "法宝未安置在区域上")
+    local zone = contract_helper:get_zone_info(nfa_data.set_zone)
+
+    assert(contract_helper:is_actor_valid_by_name(actor_name), string.format('未找到名为"%s"的角色', actor_name))
+    local actor = contract_helper:get_actor_info_by_name(actor_name)
+    assert(actor.location == zone.name, string.format('角色"%s"需要位于法宝所在地"%s"', actor_name, zone.name))
+
+    -- 角色nfa的symbol不会改变，仅仅改变nfa的主合约
+    contract_helper:change_nfa_contract(actor.nfa_id, main_contract)
     contract_helper:narrate(string.format('&YEL&%s&NOR&整个人发生了一些变化', actor_name), true)
 end
 

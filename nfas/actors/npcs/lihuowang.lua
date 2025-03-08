@@ -114,7 +114,7 @@ function on_heart_beat()
 
     local nfa_data = nfa_helper:read_contract_data({ last_cultivation_time=true })
     if nfa_data.last_cultivation_time == nil or nfa_data.last_cultivation_time == 0 then
-        if actor.health == 0 or nfa_me.qi < 50000 then
+        if actor.health == 0 or nfa_me.qi < 100000 then
             contract_helper:narrate(string.format('&YEL&%s&NOR&感到身体太差，准备开始修真。', actor.name), true)
             do_start_cultivation()
             nfa_data.last_cultivation_time = contract_helper:block()
@@ -126,6 +126,12 @@ function on_heart_beat()
         nfa_data.last_cultivation_time = 0
         nfa_helper:write_contract_data(nfa_data, { last_cultivation_time=true })
     end
+
+    local task1_tick = import_contract('contract.tasks.niuxincun.patrol').tick
+    task1_tick()
+
+    -- local task2_tick = import_contract('contract.tasks.niuxincun.mirage').tick
+    -- task2_tick()
 end
 
 function do_deposit_qi(amount)

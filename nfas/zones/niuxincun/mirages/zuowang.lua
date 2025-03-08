@@ -79,3 +79,12 @@ function do_go(target)
         contract_helper:eval_nfa_action(nfa_me.id, "look", {""})
     end
 end
+
+function on_heart_beat()
+    local nfa_me = nfa_helper:get_info()
+
+    -- 如果是李火旺，自动走出幻境
+    if nfa_me.id == 11 then
+        do_go("村道")        
+    end
+end

@@ -63,7 +63,7 @@ end
 function eval_show_me(target_nfa_id)
   if contract_helper:is_nfa_valid(target_nfa_id) then
     local main_contract = contract_helper:get_nfa_info(target_nfa_id).main_contract
-    contract_helper:narrate(string.format('\r\n%s', contract_helper:get_contract_source_code(main_contract)), false)
+    contract_helper:narrate(string.format('&HIG&散发着绿色荧光的符箓纷纷从天落下，似乎拼出一些文字：&NOR&\r\n\r\n%s', contract_helper:get_contract_source_code(main_contract)), false)
     contract_helper:narrate("&WHT&「&HIY&既见天道，为何不拜？&WHT&」&NOR&", false)
   end
 end
