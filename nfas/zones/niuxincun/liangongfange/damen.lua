@@ -22,13 +22,13 @@ function eval_long()
     local ss = ""
     local nfa_data = nfa_helper:read_contract_data({ locked=true })
     local map_data = import_contract('contract.map.niuxincun.liangongfange.damen').map_data()
-    local nfa_me = nfa_helper:get_info()
+    -- local nfa_me = nfa_helper:get_info()
 
     -- 首先显示局部地图
     -- 再显示描述
     if nfa_data.locked == true then
         ss = ss .. map_data.map_locked
-        ss = ss .. "    这里是牛心村&GRN&练功房&NOR&，大门紧闭。可以等村长李火旺前来或者往西（west）去到村口亭"
+        ss = ss .. "    这里是牛心村&GRN&练功房&NOR&，大门紧闭。可以等村长&HIC&李火旺&NOR&前来开门，或者往西（west）去到村口亭"
     else
         ss = ss .. map_data.map_unlocked
         ss = ss .. "    这里是牛心村&GRN&练功房&NOR&，大门敞开。往北（north）进入练功房，往西（west）去到村口亭"
