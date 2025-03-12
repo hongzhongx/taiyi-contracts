@@ -114,7 +114,7 @@ function on_heart_beat()
 
     local nfa_data = nfa_helper:read_contract_data({ last_cultivation_time=true })
     if nfa_data.last_cultivation_time == nil or nfa_data.last_cultivation_time == 0 then
-        if actor.health == 0 or nfa_me.qi < 50000 then
+        if actor.health == 0 or nfa_me.qi < 1000000 then
             contract_helper:narrate(string.format('&YEL&%s&NOR&感到身体太差，准备开始修真。', actor.name), true)
             do_start_cultivation()
             nfa_data.last_cultivation_time = contract_helper:block()
@@ -137,7 +137,7 @@ function do_withdraw_qi(amount)
     assert(amount > 0, "设置的真气无效")
 
     local nfa = nfa_helper:get_info()
-    assert(nfa.qi < amount, "角色体内真气不足")
+    assert(nfa.qi >= amount, "角色体内真气不足")
 
     assert(contract_base_info.caller == nfa.owner_account, "无权从角色体内提取真气")
     nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
