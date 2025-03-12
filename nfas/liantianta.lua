@@ -20,7 +20,7 @@ function do_withdraw_qi(amount)
     assert(amount > 0, "设置的真气无效")
 
     local nfa = nfa_helper:get_info()
-    assert(nfa.qi < amount, "法宝内真气不足")
+    assert(nfa.qi >= amount, "法宝内真气不足")
 
     assert(contract_base_info.caller == nfa.owner_account, "无权从法宝提取真气")
     nfa_helper:withdraw_to(nfa.owner_account, amount, "QI", true)
