@@ -74,8 +74,8 @@ function on_heart_beat()
     if nfa_data.target ~= -1 and nfa_data.total_qi_conversion >= nfa.data.conversion_threshold then
         local target_nfa = contract_helper:get_nfa_info(nfa_data.target)
         if target_nfa.data.is_zone then
-            contract_helper:change_zone_type(nfa_data.target, "NONGTIAN")
-            contract_helper:narrate(string.format('区域#%d被转化为农田', nfa_data.target), true)
+            local new_type = contract_helper:refine_zone(nfa_data.target)
+            contract_helper:narrate(string.format('区域#%d被转化为%s', nfa_data.target, new_type), true)
         end
         -- 完成功能，清除目标
         nfa_data.target = -1
