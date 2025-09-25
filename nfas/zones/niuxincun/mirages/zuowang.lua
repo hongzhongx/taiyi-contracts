@@ -77,6 +77,8 @@ function do_go(target)
         exit_narrate()
         contract_helper:exit_nfa_mirage(nfa_me.id)
         contract_helper:eval_nfa_action(nfa_me.id, "look", {""})
+        -- 自动激活一次心跳，回到正常状态
+        contract_helper:do_nfa_action(nfa_me.id, "active", {})
     end
 end
 
