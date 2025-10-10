@@ -86,7 +86,7 @@ function on_heart_beat()
     local nfa_me = nfa_helper:get_info()
 
     -- 如果是李火旺，自动走出幻境
-    if nfa_me.id == 11 then
+    if nfa_me.id == 13 then
         do_go("村道")        
     end
 end

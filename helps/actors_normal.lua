@@ -17,6 +17,7 @@ local ss = [[
     &HIG&deposit_qi [数量]&NOR&         - 直接从神魂注入先天真气到角色体内（补气）
     &HIG&withdraw_qi [数量]&NOR&        - 直接从角色体内提取先天真气到神魂
     &HIG&touch ["物品"]&NOR&            - 触摸一下指定物品
+    &HIG&talk ["对象","内容"]&NOR&      - 和指定对象谈话，内容不能为空
 ]]
 
 function help()
