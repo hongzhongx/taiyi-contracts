@@ -1,5 +1,6 @@
 short = { consequence = false }
 long = { consequence = false }
+view = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
 
@@ -18,6 +19,11 @@ function eval_long()
     -- 首先显示局部地图
     local ss = import_contract('contract.map.niuxincun.rukou').map_data()
     ss = ss .. "    往南（south）是去往&HIC&大梁城&NOR&，往北（north）就进村，往西（west）能到达&HIC&万魂山&NOR&"
+    return { ss }
+end
+
+function eval_view()
+    local ss = import_contract('contract.view.niuxincun.rukou').view_data()
     return { ss }
 end
 

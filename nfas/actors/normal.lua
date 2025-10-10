@@ -1,5 +1,6 @@
 welcome = { consequence = false }
 look = { consequence = false }
+view = { consequence = false }
 inventory = { consequence = false }
 hp = { consequence = false }
 resource = { consequence = false }
@@ -38,6 +39,11 @@ end
 function eval_look(target)
     local look = import_contract("contract.cmds.std.look").look
     look(target)
+end
+
+function eval_view(target)
+    local view = import_contract("contract.cmds.std.view").view
+    view(target)
 end
 
 function eval_inventory(target, options)
