@@ -55,10 +55,10 @@ function on_heart_beat()
     -- 转化自身的元气到食物
     local nfa = nfa_helper:get_info()
 	-- contract_helper:log(string.format('nfa qi=%d', nfa.qi))
-    if nfa.qi > 1000 then
-        nfa_helper:convert_qi_to_resource(1000, "FOOD")
+    if nfa.qi > 3000 then
+        nfa_helper:convert_qi_to_resource(3000, "FOOD")
         -- 记录转化总量
-        nfa_data.total_qi_conversion = nfa_data.total_qi_conversion + 1000
+        nfa_data.total_qi_conversion = nfa_data.total_qi_conversion + 3000
         nfa_helper:write_contract_data(nfa_data, { total_qi_conversion=true })
     end
 
