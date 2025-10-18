@@ -75,15 +75,19 @@ function on_heart_beat()
     if nfa.qi > 10000000 then
         nfa_helper:convert_qi_to_resource(10000000, "GOLD")
     end
+    nfa = nfa_helper:get_info()
     if nfa.qi > 6000000 then
         nfa_helper:convert_qi_to_resource(6000000, "FOOD")
     end
+    nfa = nfa_helper:get_info()
     if nfa.qi > 4000000 then
         nfa_helper:convert_qi_to_resource(4000000, "WOOD")
     end
+    nfa = nfa_helper:get_info()
     if nfa.qi > 6000000 then
         nfa_helper:convert_qi_to_resource(6000000, "FABR")
     end
+    nfa = nfa_helper:get_info()
     if nfa.qi > 8000000 then
         nfa_helper:convert_qi_to_resource(8000000, "HERB")
     end

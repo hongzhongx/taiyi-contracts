@@ -3,6 +3,7 @@ long = { consequence = false }
 view = { consequence = false }
 exits = { consequence = false }
 map = { consequence = false }
+set_ref_prohibited_contract_zone = { consequence = true }
 
 function init_data()
     return {
@@ -106,4 +107,11 @@ function on_actor_exploit(actor_nfa_id)
         contract_helper:narrate(string.format('&YEL&%d年%d月&NOR&，&YEL&%s&NOR&采集到&YEL&%f&NOR&药材。', tiandao.v_years, tiandao.v_months, actor.name, reward_herb/1000000.0), false)
     end
 
+end
+
+function do_set_ref_prohibited_contract_zone(ref_zone_name)
+    local nfa = nfa_helper:get_info()
+    local zone_info = contract_helper:get_zone_info(nfa.id)
+
+    contract_helper:set_zone_ref_prohibited_contract_zone(zone_info.name, ref_zone_name)
 end
