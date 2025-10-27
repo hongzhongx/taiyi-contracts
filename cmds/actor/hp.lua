@@ -104,7 +104,7 @@ function hp(target, option)
             standpoint_type_color(obj_info.standpoint_type), standpoint_type_descs(obj_info.standpoint_type),
             status_color(obj_info.health, obj_info.health_max), obj_info.health, obj_info.health_max)
         ss = ss .. string.format('&HIC&【 出生时节 】&GRN&%s                     &HIC&【 位 于 】   &GRN&%s\n',
-            chinese_types.solar_term_data[obj_info.born_vtimes], location_zone:short())
+            chinese_types.solar_term_data[obj_info.born_vtimes + 1], location_zone:short())
         ss = ss .. string.format('&HIC&【 五 行 】   %s%s                       &HIC&【 从 属 】   &GRN&%s\n',
             chinese_types.five_phases_color(obj_info.five_phase), chinese_types.five_phases_data[obj_info.five_phase+1], obj_info.base)
         ss = ss .. string.format('&HIC&【 健 康 】 %s%5d/ %5d               &HIC&【 年 龄 】 %s%5d / %5d\n',
