@@ -42,6 +42,8 @@ end
 function do_touch(from_who)
   assert(contract_helper:is_actor_valid_by_name(from_who), string.format('未找到名为"%s"的角色', from_who))
   local actor = contract_helper:get_actor_info_by_name(from_who)
+  local nfa = nfa_helper:get_info()
+  assert(contract_helper:get_nfa_location(nfa.id) == actor.location, string.format('&YEL&%s&NOR&无法摸到路引', from_who))
   local main_contract = contract_helper:get_nfa_info(actor.nfa_id).main_contract
   if main_contract == "contract.actor.normal" then
     do_upgrade_actor(from_who)

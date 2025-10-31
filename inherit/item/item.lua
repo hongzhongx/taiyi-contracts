@@ -67,6 +67,19 @@ function Item:long()
     return self:short()
 end
 
+function Item:view()
+    if self.nfa_info.id == nil then
+        return ""
+    end
+
+    local result = contract_helper:eval_nfa_action(self.nfa_info.id, "view", {})
+    if #result == 1 then
+        return result[1]
+    end
+
+    return ""
+end
+
 function Item:data()
     if self.nfa_info.data == nil then
         return {}

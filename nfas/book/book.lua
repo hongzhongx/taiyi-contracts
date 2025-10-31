@@ -57,6 +57,10 @@ function eval_read(page_id)
         local page_nfa_id = pages[page_id]
 
         if page_nfa_id ~= nil then
+            if contract_helper:is_nfa_action_exist(page_nfa_id, "read") == false then
+                contract_helper:narrate(string.format('这本书的第%d页无法阅读', page_id), false)
+                return
+            end
             contract_helper:eval_nfa_action(page_nfa_id, "read", {})
         else
             contract_helper:narrate(string.format('这本书没有第%d页', page_id), false)

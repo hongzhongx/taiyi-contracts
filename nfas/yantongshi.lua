@@ -1,5 +1,6 @@
 short = { consequence = false }
 long = { consequence = false }
+help = { consequence = false }
 
 born_actor = { consequence = true }
 upgrade_actor = { consequence = true }
@@ -15,6 +16,33 @@ function init_data()
         unit = "块",
         set_zone = -1   -- zone nfa id
     }
+end
+
+function eval_help()
+  local ss = [[
+&WHT&『&HIY&衍童石可用命令&NOR&&WHT&』
+    &HIG&绿色命令&NOR&为产生影响（因果）的命令，需要消耗真气并等待天道网络响应
+
+    &WHT&help []&NOR&                                  - 显示本帮助
+
+    &HIG&born_actor ["角色名", 性别, 性取向, 初始属性列表, 物性]&NOR&         - 出生角色
+        角色名：必须是已经创建但未出生的角色
+        性别：0=随机，-1=男，1=女，-2=男生女相，2=女生男相
+        性取向：0=无性取向，1=喜欢男性，2=喜欢女性，3=双性恋
+        初始属性列表：一个包含八个整数的列表，对应初始的八项核心属性（体质、根骨、悟性、灵根、力量、敏捷、定力、魅力）
+        物性：将法宝材料注入到角色体内的比率万分比，[0, 10000]，10000表示全部注入
+    &HIG&upgrade_actor ["角色名"]&NOR&                  - 升级某人为普通角色
+    &HIG&upgrade_actor_cultivator ["角色名"]&NOR&       - 升级某人为修炼者角色
+    &HIG&upgrade_actor_with ["角色名", "主合约名"]&NOR&  - 升级某人为指定主合约的角色
+        角色名：必须是已经出生的角色
+        主合约名：例如"contract.actor.someone"
+    &HIG&set_zone [区域nfa_id]&NOR&                     - 设置法宝所在区域
+        区域nfa_id：必须是一个有效的区域nfa id
+    &HIG&deposit_resource [数量, 资源符号]&NOR&          - 向法宝内存入资源
+        资源符号：GOLD=金钱, FOOD=食物, WOOD=木材, FABR=织物, HERB=草药
+        资源数量：必须是正整数
+]]
+  contract_helper:narrate(ss, false)
 end
 
 function eval_short()

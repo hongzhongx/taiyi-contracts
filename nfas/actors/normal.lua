@@ -1,5 +1,6 @@
 welcome = { consequence = false }
 look = { consequence = false }
+view = { consequence = false }
 inventory = { consequence = false }
 hp = { consequence = false }
 resource = { consequence = false }
@@ -14,6 +15,7 @@ start_cultivation = { consequence = true }
 stop_cultivation = { consequence = true }
 eat = { consequence = true }
 touch = { consequence = true }
+talk = { consequence = true }
 
 function init_data()
     return {
@@ -37,6 +39,11 @@ end
 function eval_look(target)
     local look = import_contract("contract.cmds.std.look").look
     look(target)
+end
+
+function eval_view(target)
+    local view = import_contract("contract.cmds.std.view").view
+    view(target)
 end
 
 function eval_inventory(target, options)
@@ -145,4 +152,77 @@ function do_touch(target_name)
             end
         end
     end
+end
+
+function do_talk(someone, something)
+    check_live()
+    local talk = import_contract("contract.cmds.std.talk").talk
+    talk(someone, something)
+end
+
+-- 谈话回调函数
+function on_actor_talking(someone, something)
+    local nfa_me = nfa_helper:get_info()
+    local actor_me = contract_helper:get_actor_info(nfa_me.id)
+    local attributes_me = contract_helper:get_actor_core_attributes(nfa_me.id)
+
+    local actor_target = contract_helper:get_actor_info_by_name(someone)
+    local attributes_target = contract_helper:get_actor_core_attributes(actor_target.nfa_id)
+
+    -- 好感提升 = 基础值 × 立场系数
+    --  基础值 = 10 + 角色魅力/10 + 角色名誉，最低为10
+    --  双方处世立场的关系决定立场系数，并触发不同的对话：
+    --  若双方立场相同，立场系数 = 4
+    --  若一方立场为仁善或刚正，另一方为叛逆或唯我，立场系数 = 1
+    --  否则，立场系数 = 2
+    local delta_favor_base = math.max(10, 10 + math.floor(attributes_me.charm / 10))
+    local standpoint_dt = math.abs(actor_target.standpoint - actor_me.standpoint)
+    local standpoint_fac = 2
+    if standpoint_dt < 100 then
+        standpoint_fac = 4
+    elseif standpoint_dt > 500 then
+        standpoint_fac = 1
+    end
+
+    local delta_favor = delta_favor_base * standpoint_fac
+
+    contract_helper:narrate(string.format('&YEL&%s&NOR&对&YEL&%s&NOR&说道：%s', actor_me.name, someone, something), true)
+    contract_helper:narrate(string.format('&YEL&%s&NOR&对&YEL&%s&NOR&的好感度改变了&GRN&%d&NOR&', actor_me.name, someone, delta_favor), true)
+
+    return { delta_favor }
+end
+
+-- 听话回调函数
+function on_actor_listening(from_who, something)
+    local nfa_me = nfa_helper:get_info()
+    local actor_me = contract_helper:get_actor_info(nfa_me.id)
+    local attributes_me = contract_helper:get_actor_core_attributes(nfa_me.id)
+
+    local actor_from = contract_helper:get_actor_info_by_name(from_who)
+    local attributes_from = contract_helper:get_actor_core_attributes(actor_from.nfa_id)
+
+    -- 好感提升 = 基础值 × 立场系数
+    --  基础值 = 10 + 角色魅力/10 + 角色名誉，最低为10
+    --  双方处世立场的关系决定立场系数，并触发不同的对话：
+    --  若双方立场相同，立场系数 = 4
+    --  若一方立场为仁善或刚正，另一方为叛逆或唯我，立场系数 = 1
+    --  否则，立场系数 = 2
+    local delta_favor_base = math.max(10, 10 + math.floor(attributes_me.charm / 10))
+    local standpoint_dt = math.abs(actor_from.standpoint - actor_me.standpoint)
+    local standpoint_fac = 2
+    local talk_content = "如此……这般……或许……也不尽然……"
+    if standpoint_dt < 100 then
+        standpoint_fac = 4
+        talk_content = "如此……这般……不错……不错……正是如此！"
+    elseif standpoint_dt > 500 then
+        standpoint_fac = 1
+        talk_content = "如此……这般……不然……不然……岂有此理！？"
+    end
+
+    local delta_favor = delta_favor_base * standpoint_fac
+
+    contract_helper:narrate(string.format('&YEL&%s&NOR&对&YEL&%s&NOR&说道：%s', actor_me.name, from_who, talk_content), true)
+    contract_helper:narrate(string.format('&YEL&%s&NOR&对&YEL&%s&NOR&的好感度改变了&GRN&%d&NOR&', actor_me.name, from_who, delta_favor), true)
+
+    return { delta_favor }
 end
