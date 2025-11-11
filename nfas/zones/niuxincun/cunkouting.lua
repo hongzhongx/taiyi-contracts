@@ -29,7 +29,7 @@ end
 function eval_exits()
     local exits = {
         south = "牛心村",
-        north = "牛心村.小道",
+        north = "牛心村.村道",
         west = "牛心村.练功房西.大门",
         east = "牛心村.练功房东.大门"
     }
