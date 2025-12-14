@@ -89,9 +89,6 @@ function do_exploit(something)
     if something == "" then
         local exploit = import_contract("contract.cmds.std.exploit").exploit
         exploit()
-    elseif something == "zone"  then
-        local break_new_zone = import_contract("contract.cmds.std.exploit").break_new_zone
-        break_new_zone()
     end
 end
 

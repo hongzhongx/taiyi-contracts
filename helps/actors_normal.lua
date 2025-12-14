@@ -12,7 +12,7 @@ local ss = [[
 
     &HIG&go ["方向"]&NOR&               - 移动到指定方向
     &HIG&eat ["物品"]&NOR&              - 吃东西，可以补充真气体力
-    &HIG&exploit ["目标"]&NOR&          - 开采和探索，可以获得资源或者物品，目标为空表示探索当前区域，目标为"zone"表示开辟周围的新区域
+    &HIG&exploit ["目标"]&NOR&          - 开采和探索，可以获得资源或者物品，目标为空表示探索当前区域
     &HIG&start_cultivation []&NOR&      - 开始炼气，以自身一半的真气开启一次简单的养生活动
     &HIG&stop_cultivation []&NOR&       - 停止炼气，结束本次养生修真，可以获得少量真气
     &HIG&deposit_qi [数量]&NOR&         - 直接从神魂注入先天真气到角色体内（补气）

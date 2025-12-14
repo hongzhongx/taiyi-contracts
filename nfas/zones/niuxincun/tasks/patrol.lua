@@ -49,11 +49,11 @@ function tick()
             if nfa_me.id == 11 and zone_info.name == "牛心村.练功房东.大门" then
                 if nfa_data.patrol_dir == 1 then
                     -- open door
-                    nfa_helper:do_nfa_action(zone_info.nfa_id, 'unlock', {})
+                    contract_helper:do_nfa_action(zone_info.nfa_id, 'unlock', {})
                     contract_helper:narrate(string.format('&YEL&%s&NOR&打开了&HIC&练功房大门&NOR&。', actor_me.name), true)
                 elseif nfa_data.patrol_dir == -1 then
                     -- close door
-                    nfa_helper:do_nfa_action(zone_info.nfa_id, 'lock', {})
+                    contract_helper:do_nfa_action(zone_info.nfa_id, 'lock', {})
                     contract_helper:narrate(string.format('&YEL&%s&NOR&关闭了&HIC&练功房大门&NOR&。', actor_me.name), true)
                 end
             end

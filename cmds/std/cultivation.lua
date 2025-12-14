@@ -8,7 +8,7 @@ function start(qi)
     local actor_me = contract_helper:get_actor_info(nfa_me.id)
 
     contract_helper:narrate(string.format('&YEL&%s&NOR&准备修真。', actor_me.name), true)
-    local cultivation_id = contract_helper:create_cultivation(nfa_me.id, {nfa_me.id}, {10000}, 300)
+    local cultivation_id = contract_helper:create_cultivation(nfa_me.id, {nfa_me.id}, {10000}, 100)
 
     local err = contract_helper:participate_cultivation(cultivation_id, nfa_me.id, qi)
     assert(err == '', string.format('%s。', err))

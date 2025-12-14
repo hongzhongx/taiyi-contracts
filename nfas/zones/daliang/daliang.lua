@@ -39,7 +39,7 @@ end
 -- 仅由move_actor回调
 function on_actor_enter(actor_nfa_id)
     contract_helper:narrate("    这里是&HIC&大梁&NOR&城门。这位朋友，本司看你筋骨不凡，就送你一本&HIM&路引&NOR&。", false)
-    local nft_id = contract_helper:create_nfa(actor_nfa_id, "nfa.item.luyin", { referee = "监天司", destination = "后蜀"}, true)
+    local nft_id = nfa_helper:create_nfa_to_actor(actor_nfa_id, "nfa.item.luyin", { referee = "监天司", destination = "后蜀"})
     Item = import_contract('contract.inherit.item').Item 
     local luyin = Item:new(contract_helper:get_nfa_info(nft_id))
 

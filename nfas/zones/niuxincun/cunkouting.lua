@@ -29,7 +29,7 @@ end
 function eval_exits()
     local exits = {
         south = "牛心村",
-        north = "牛心村.小道",
+        north = "牛心村.村道",
         west = "牛心村.练功房西.大门",
         east = "牛心村.练功房东.大门"
     }
@@ -44,9 +44,4 @@ end
 function on_actor_enter(actor_nfa_id)
     local actor = contract_helper:get_actor_info(actor_nfa_id)
     contract_helper:narrate(string.format('    &YEL&%s&NOR&来到了&HIC&%s&NOR&', actor.name, eval_short()[1]), false)
-    local mirage_p = contract_helper:random() % 100
-    if mirage_p < 50 then
-        contract_helper:enter_nfa_mirage(actor_nfa_id, "contract.mirage.zuowang")
-        contract_helper:do_nfa_action(actor_nfa_id, "trigger", {})
-    end
 end
